@@ -8,9 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var viewModel = ContentViewViewModel()
     var body: some View {
         ZStack {
-            LoginView()
+            if viewModel.isSignedIn, !viewModel.currentUserID.isEmpty {
+                TabView{
+                    HomepageView()
+                        .tabItem{
+                            Label("Home", systemImage: "house")
+                        }
+                    ProfileView()
+                        .tabItem{
+                            Label("Profile", systemImage: "person.circle")
+                        }
+                }
+            }
+            else {
+                LoginView()
+            }
         }
     }
 }
